@@ -28,7 +28,7 @@
 <meta property="og:description" content="docker本章着重介绍Docker的命令和实战演演练 介绍和理论部分较少— docker-容器容器是隔离的环境中运行的一个进程,如果进程结束,容器就会停止. 容器的隔离环境,拥有自己的ip地址,系统文件,主机名,进程管理,相当于一个mini的系统. docker安装 本章系统为 Centos-7  123456789101-安装依赖[root@docker.10.0.0.81 ~]# yum i">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-03T15:26:39.000Z">
-<meta property="article:modified_time" content="2024-12-03T16:12:06.676Z">
+<meta property="article:modified_time" content="2024-12-04T15:24:25.089Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -240,7 +240,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            1.7k words 
+            8.8k words 
           </div>
         </div>
         
@@ -267,6 +267,7 @@
 <p><a target="_blank" rel="noopener" href="https://hub.docker.com/">docker官网</a>用于查images-镜像的版本</p>
 <blockquote>
 <p>docker images 查看镜像</p>
+<p>-q 返回镜像ID</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker images<br>REPOSITORY   TAG             IMAGE ID       CREATED       SIZE<br>nginx        latest          1ee494ebb83f   6 days ago    192MB<br>nginx        1.20.2-alpine   6cf0c840a5a4   2 years ago   23.2MB<br></code></pre></td></tr></table></figure>
 <blockquote>
@@ -301,7 +302,99 @@
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker rmi nginx-01:v1<br>Untagged: nginx-01:v1<br>[root@docker.10.0.0.81 ~]# docker images<br>REPOSITORY   TAG             IMAGE ID       CREATED       SIZE<br>nginx        latest          1ee494ebb83f   6 days ago    192MB<br>nginx        1.20.2-alpine   6cf0c840a5a4   2 years ago   23.2MB<br></code></pre></td></tr></table></figure>
 
+<h2 id="docker-container-管理"><a href="#docker-container-管理" class="headerlink" title="docker-container 管理"></a>docker-container 管理</h2><blockquote>
+<p>docker ps 查看运行的容器</p>
+<p>-a 查看所有</p>
+<p>-q 返回容器ID</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker ps<br>CONTAINER ID   IMAGE     COMMAND                  CREATED      STATUS      PORTS                               NAMES<br>a233eda97fc6   nginx     &quot;/docker-entrypoint.…&quot;   6 days ago   Up 6 days   0.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp   redking_nginx<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker run 运行容器</p>
+<p>-d 后台运行</p>
+<p>-p 映射端口</p>
+<p>–name 名称</p>
+<p>-v 挂在数据卷</p>
+<p>-it 交互模式</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -d --name nginx-01 -p 88:80 nginx:1.20.2-alpine <br>cdd275e7ec2d3ea99dc53d8f43d5b35922935acb01ffcde2acfda694eee1ee04<br>[root@docker.10.0.0.81 ~]# docker ps<br>CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                               NAMES<br>cdd275e7ec2d   nginx:1.20.2-alpine   &quot;/docker-entrypoint.…&quot;   7 seconds ago   Up 6 seconds   0.0.0.0:88-&gt;80/tcp, :::88-&gt;80/tcp   nginx-01<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker create 创建容器</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker create nginx<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker start 启动容器</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker start nginx-01<br>nginx-01<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker stop 停止容器</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker stop nginx-01<br>nginx-01<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker restart 重启容器</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker restart nginx-01 <br>nginx-01<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker stats 查看容器状态</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker stats redking_nginx<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker logs 查看容器日志</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker logs nginx_vol<br>.....<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker kill 杀掉容器</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker kill nginx-01<br>nginx-01<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker rm 删除容器</p>
+<p>-f 强制</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker rm nginx-01 <br>nginx-01<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker exec 进入容器</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker exec -it redking_nginx /bin/bash<br>root@a233eda97fc6:/# exit<br>exit<br></code></pre></td></tr></table></figure>
+<h3 id="container-传输"><a href="#container-传输" class="headerlink" title="container 传输"></a>container 传输</h3><blockquote>
+<p>文件上传</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# echo &quot;this is container cp test&quot; &gt; index.html<br>[root@docker.10.0.0.81 ~]# docker cp index.html redking_nginx:/usr/share/nginx/html/index.html<br>Successfully copied 2.05kB to redking_nginx:/usr/share/nginx/html/index.html<br>[root@docker.10.0.0.81 ~]# curl 10.0.0.81:80<br>this is container cp test<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>文件下载</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker cp redking_nginx:/usr/share/nginx/html/50x.html .<br>Successfully copied 2.05kB to /root/.<br>[root@docker.10.0.0.81 ~]# ll 50x.html<br>-rw-r--r-- 1 root root 497 Nov 26 23:55 50x.html<br></code></pre></td></tr></table></figure>
+<h3 id="基于container生成镜像"><a href="#基于container生成镜像" class="headerlink" title="基于container生成镜像"></a>基于container生成镜像</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker commit redking_nginx redking_nginx:01<br>sha256:d50f98bd338ea75c9856c678bf1d1599e8d5f9cf105d133ff4eb3b254a400c1a<br>[root@docker.10.0.0.81 ~]# docker images<br>REPOSITORY      TAG             IMAGE ID       CREATED          SIZE<br>redking_nginx   01              d50f98bd338e   14 seconds ago   192MB<br>nginx           latest          1ee494ebb83f   7 days ago       192MB<br>nginx           1.20.2-alpine   6cf0c840a5a4   2 years ago      23.2MB<br></code></pre></td></tr></table></figure>
+<h3 id="container端口映射"><a href="#container端口映射" class="headerlink" title="container端口映射"></a>container端口映射</h3><ul>
+<li>docker port 查看映射端口<blockquote>
+<p>1.映射多个窗口</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -d -p 83-86:83-86 nginx:1.20.2-alpine<br>[root@docker.10.0.0.81 ~]# docker port 3bd421dc6f64<br>83/tcp -&gt; 0.0.0.0:83<br>83/tcp -&gt; [::]:83<br>84/tcp -&gt; 0.0.0.0:84<br>84/tcp -&gt; [::]:84<br>85/tcp -&gt; 0.0.0.0:85<br>85/tcp -&gt; [::]:85<br>86/tcp -&gt; 0.0.0.0:86<br>86/tcp -&gt; [::]:86<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>2.绑定IP端口映射</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -d --name nginx_003 -p 172.16.1.81:896:80 nginx:1.20.2-alpine <br>d0d92ff93857f5b1ecd321ae7a052729b24472aea06e18121e966d800cf38a5d<br>[root@docker.10.0.0.81 ~]# docker port nginx_003 <br>80/tcp -&gt; 172.16.1.81:896<br>[root@docker.10.0.0.81 ~]# curl 172.16.1.81:896<br>&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;<br>&lt;title&gt;Welcome to nginx!&lt;/title&gt;<br>...<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="container-数据卷挂载"><a href="#container-数据卷挂载" class="headerlink" title="container 数据卷挂载"></a>container 数据卷挂载</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -d --name nginx_volume_v1 \<br>&gt; -p 90:80 \<br>&gt; -v /app/docker/web/code/index.html:/usr/share/nginx/html/index.html \<br>&gt; nginx:1.20.2-alpine<br>47cfd8fbb332b480d16e05866c92962b1726d003ed998869b7e412c963aa4af4<br><br>[root@docker.10.0.0.81 ~]# curl 10.0.0.81:90<br>this is container volume test<br><br>[root@docker.10.0.0.81 ~]# docker inspect nginx_volume_v1 | jq .[].HostConfig.Binds<br>[<br>  &quot;/app/docker/web/code/index.html:/usr/share/nginx/html/index.html&quot;<br>]<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker volume create创建数据卷</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker volume create nginx_index.html<br>nginx_index.html<br><br>[root@docker.10.0.0.81 ~]# docker volume ls<br>DRIVER    VOLUME NAME<br>local     nginx_index.html<br><br>[root@docker.10.0.0.81 ~]# tree /var/lib/docker/volumes/<br>/var/lib/docker/volumes/<br>├── backingFsBlockDev<br>├── metadata.db<br>└── nginx_index.html<br>    └── _data<br><br>2 directories, 2 files<br><br>挂载到container<br>[root@docker.10.0.0.81 ~]# docker run -d --name nginx_vol -p 80:80 -v nginx_index.html:/var/log/nginx nginx:1.20.2-alpine <br>f379e7f12061572430646daeef5b6eae43e822f7c72a542e741da1aedf82a253<br><br>[root@docker.10.0.0.81 ~]# curl 10.0.0.81:80<br><br>[root@docker.10.0.0.81 ~]# ll /var/lib/docker/volumes/nginx_index.html/_data/<br>total 0<br>lrwxrwxrwx 1 root root 11 May 18  2022 access.log -&gt; /dev/stdout<br>lrwxrwxrwx 1 root root 11 May 18  2022 error.log -&gt; /dev/stderr<br></code></pre></td></tr></table></figure>
 
+<h3 id="构建镜像运行容器"><a href="#构建镜像运行容器" class="headerlink" title="构建镜像运行容器"></a>构建镜像运行容器</h3><ul>
+<li>下载原始镜像<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker pull ubuntu:20.04<br>20.04: Pulling from library/ubuntu<br>d9802f032d67: Pull complete<br>Digest: sha256:8e5c4f0285ecbb4ead070431d29b576a530d3166df73ec44affc1cd27555141b<br>Status: Downloaded newer image for ubuntu:20.04<br>docker.io/library/ubuntu:20.04<br>[root@docker.10.0.0.81 ~]# docker images | grep ubuntu<br>ubuntu          20.04           6013ae1a63c2   7 weeks ago      72.8MB<br></code></pre></td></tr></table></figure></li>
+<li>启动原始容器环境<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -it --name &quot;ubuntu_tengine_v1&quot; ubuntu:20.04<br>root@e8bf4358e434:/# sed -ri &#x27;s#archive.ubuntu.com|security.ubuntu.com#mirrors.aliyun.com#g&#x27;   /etc/apt/sources.list<br>root@e8bf4358e434:/# apt update<br>root@e8bf4358e434:/# apt install -y vim curl wget tar<br></code></pre></td></tr></table></figure></li>
+<li>下载软件包<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">root@e8bf4358e434:/# wget https://tengine.taobao.org/download/tengine-2.3.3.tar.gz<br>root@e8bf4358e434:/# tar xf tengine-2.3.3.tar.gz <br>root@e8bf4358e434:/# cd tengine-2.3.3<br>root@e8bf4358e434:/tengine-2.3.3#<br></code></pre></td></tr></table></figure></li>
+<li>编译安装软件<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">root@e8bf4358e434:/tengine-2.3.3# apt install -y libssl-dev make gcc pcre2-utils libpcre3-dev  zlib1g-dev<br><br>root@e8bf4358e434:/tengine-2.3.3# ./configure --prefix=/app/tools/tengine-2.3.3/  \<br>&gt; --user=nginx \<br>&gt; --group=nginx \<br>&gt; --with-http_ssl_module \<br>&gt; --with-http_v2_module   \<br>&gt; --with-http_realip_module \<br>&gt; --with-http_stub_status_module \<br>&gt; --with-http_mp4_module \<br>&gt; --with-stream  \<br>&gt; --with-stream_ssl_module   \<br>&gt; --with-stream_realip_module   \<br>&gt; --add-module=modules/ngx_http_upstream_check_module/ \<br>&gt; --add-module=modules/ngx_http_upstream_session_sticky_module<br><br>root@e8bf4358e434:/tengine-2.3.3# make &amp;&amp; make install<br><br></code></pre></td></tr></table></figure></li>
+<li>启动 测试<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">root@e8bf4358e434:/tengine-2.3.3# groupadd nginx<br>root@e8bf4358e434:/tengine-2.3.3# useradd -s /sbin/nologin -g nginx nginx<br>root@e8bf4358e434:/tengine-2.3.3# ln -s /app/tools/tengine-2.3.3/ /app/tools/tengine<br>root@e8bf4358e434:/tengine-2.3.3# ln -s /app/tools/tengine/sbin/nginx /sbin<br>root@e8bf4358e434:/tengine-2.3.3# nginx -V<br>Tengine version: Tengine/2.3.3<br>nginx version: nginx/1.18.0<br>built by gcc 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2)<br>built with OpenSSL 1.1.1f  31 Mar 2020<br>TLS SNI support enabled<br>configure arguments: --prefix=/app/tools/tengine-2.3.3/ --user=nginx --group=nginx --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_stub_status_module --with-http_mp4_module --with-stream --with-stream_ssl_module --with-stream_realip_module --add-module=modules/ngx_http_upstream_check_module/ --add-module=modules/ngx_http_upstream_session_sticky_module<br>root@e8bf4358e434:/tengine-2.3.3# nginx<br>root@e8bf4358e434:/tengine-2.3.3# echo &quot;this is test&quot; &gt; /app/tools/tengine/html/index.html <br>root@e8bf4358e434:/tengine-2.3.3# curl localhost<br>this is test<br></code></pre></td></tr></table></figure></li>
+<li>最小化<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">root@e8bf4358e434:/# rm -r tengine-2.3.3<br>root@e8bf4358e434:/# rm -r /var/cache/*<br></code></pre></td></tr></table></figure></li>
+<li>生成镜像<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker commit ubuntu_tengine_v1 tengine:2.3.3-v1<br></code></pre></td></tr></table></figure></li>
+<li>生成容器<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run --name tengine_v1 -p 80:80 tengine:2.3.3-v1 nginx -g &#x27;daemon off;&#x27;<br>[root@docker.10.0.0.81 ~]# docker start tengine_v1 <br>[root@docker.10.0.0.81 ~]# curl 10.0.0.81<br>this is test<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>nginx -g用于在命令行中指定配置文件中的选项&#x2F;指令,要以分号结尾.</p>
+<p>daemon off 关闭守护进程模式,前台运行</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="dockerfile-编写"><a href="#dockerfile-编写" class="headerlink" title="dockerfile 编写"></a>dockerfile 编写</h2><h2 id="container-likn-互联"><a href="#container-likn-互联" class="headerlink" title="container-likn 互联"></a>container-likn 互联</h2><h2 id="docker-harbor-仓库搭建"><a href="#docker-harbor-仓库搭建" class="headerlink" title="docker-harbor 仓库搭建"></a>docker-harbor 仓库搭建</h2>
         
       </div>
 
