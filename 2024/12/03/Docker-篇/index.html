@@ -14,7 +14,7 @@
   
 
   
-  <title>Docker-篇 | Hexo</title>
+  <title>Docker-篇 | RedkingS</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="preload" href="/css/fonts/Roboto-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
@@ -24,16 +24,16 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker-篇">
 <meta property="og:url" content="http://example.com/2024/12/03/Docker-%E7%AF%87/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="RedkingS">
 <meta property="og:description" content="docker本章着重介绍Docker的命令和实战演演练 介绍和理论部分较少— docker-容器容器是隔离的环境中运行的一个进程,如果进程结束,容器就会停止. 容器的隔离环境,拥有自己的ip地址,系统文件,主机名,进程管理,相当于一个mini的系统. docker安装 本章系统为 Centos-7  123456789101-安装依赖[root@docker.10.0.0.81 ~]# yum i">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-03T15:26:39.000Z">
-<meta property="article:modified_time" content="2024-12-04T15:24:25.089Z">
+<meta property="article:modified_time" content="2024-12-07T09:40:43.904Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
   
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="RedkingS" type="application/atom+xml">
   
   
     <link rel="icon" media="(prefers-color-scheme: light)" href="/images/favicon-light-32.png" sizes="32x32">
@@ -71,7 +71,7 @@
         <div class="dot"></div>
         <div class="dot"></div>
       </div>
-      <div>Hexo </div>
+      <div>RedkingS </div>
     </a>
   </nav>
   <nav id="main-nav">
@@ -164,6 +164,11 @@
                 Docker
                 <div class="category-count">1</div>
             </a>
+        
+            <a class="category-link" href="/categories/service/">
+                service
+                <div class="category-count">1</div>
+            </a>
         </div>
     </div>
   </div>
@@ -174,7 +179,7 @@
   <div class="widget-wrap">
     <div class="widget">
       <h3 class="widget-title">Tags</h3>
-      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li></ul>
+      <ul class="widget-tag-list" itemprop="keywords"><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/Docker/" rel="tag">Docker</a></li><li class="widget-tag-list-item"><a class="widget-tag-list-link" href="/tags/service/" rel="tag">service</a></li></ul>
     </div>
   </div>
 
@@ -188,7 +193,7 @@
       
         <a class="archive-link" href="/archives/2024/12 ">
           December 2024 
-          <div class="archive-count">1 </div>
+          <div class="archive-count">2 </div>
         </a>
       
         <a class="archive-link" href="/archives/2024/10 ">
@@ -240,7 +245,7 @@
   
           </div>
           <div class="wordcount need-seperator meta-info">
-            8.8k words 
+            15k words 
           </div>
         </div>
         
@@ -315,6 +320,12 @@
 <p>–name 名称</p>
 <p>-v 挂在数据卷</p>
 <p>-it 交互模式</p>
+<p>–rm 容器关闭后自动删除 用于测试</p>
+<p>–restart docker重启后 container自动重启</p>
+<ul>
+<li>always 自动重启</li>
+</ul>
+<p>-e 变量赋值</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -d --name nginx-01 -p 88:80 nginx:1.20.2-alpine <br>cdd275e7ec2d3ea99dc53d8f43d5b35922935acb01ffcde2acfda694eee1ee04<br>[root@docker.10.0.0.81 ~]# docker ps<br>CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                               NAMES<br>cdd275e7ec2d   nginx:1.20.2-alpine   &quot;/docker-entrypoint.…&quot;   7 seconds ago   Up 6 seconds   0.0.0.0:88-&gt;80/tcp, :::88-&gt;80/tcp   nginx-01<br></code></pre></td></tr></table></figure>
 <blockquote>
@@ -338,7 +349,11 @@
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker stats redking_nginx<br></code></pre></td></tr></table></figure>
 <blockquote>
-<p>docker logs 查看容器日志</p>
+<p>docker logs 查看容器日志 &#x2F; 需要创建容器卷挂载</p>
+<p>-f 查看所有</p>
+<ul>
+<li>-n 查看多少列</li>
+</ul>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker logs nginx_vol<br>.....<br></code></pre></td></tr></table></figure>
 <blockquote>
@@ -354,6 +369,14 @@
 <p>docker exec 进入容器</p>
 </blockquote>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker exec -it redking_nginx /bin/bash<br>root@a233eda97fc6:/# exit<br>exit<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker –rm 容器暂停自动删除</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -d --name test --rm nginx:1.20.2-alpine <br>028a00cf1e46c494e0ed446d8041a3ca71089035e11a3627f502494664e3f85c<br>[root@docker.10.0.0.81 ~]# docker ps<br>CONTAINER ID   IMAGE                 COMMAND                  CREATED         STATUS         PORTS                               NAMES<br>028a00cf1e46   nginx:1.20.2-alpine   &quot;/docker-entrypoint.…&quot;   4 seconds ago   Up 3 seconds   80/tcp                              test<br>f92c3ddb6295   tengine:2.3.3-v1      &quot;nginx -g &#x27;daemon of…&quot;   38 hours ago    Up 38 hours    0.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp   tengine_v1<br>[root@docker.10.0.0.81 ~]# docker stop test<br>test<br>[root@docker.10.0.0.81 ~]# docker ps -a<br>CONTAINER ID   IMAGE              COMMAND                  CREATED        STATUS        PORTS                               NAMES<br>f92c3ddb6295   tengine:2.3.3-v1   &quot;nginx -g &#x27;daemon of…&quot;   38 hours ago   Up 38 hours   0.0.0.0:80-&gt;80/tcp, :::80-&gt;80/tcp   tengine_v1<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>docker -e 变量赋值</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# docker run -d --name &quot;mariadb&quot; -e MARIADB_ROOT_PASSWORD=1  mariadb:latest<br>7ecfd661f9e5daaff03244ddf926ea27aa661eaf1d70c52e97bf8e55915b311d<br>[root@docker.10.0.0.81 ~]# docker exec -it mariadb mariadb -uroot -p1<br>Welcome to the MariaDB monitor.  Commands end with ; or \g.<br>Your MariaDB connection id is 3<br>Server version: 11.6.2-MariaDB-ubu2404 mariadb.org binary distribution<br><br>Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.<br><br>Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.<br><br>MariaDB [(none)]&gt;<br></code></pre></td></tr></table></figure>
 <h3 id="container-传输"><a href="#container-传输" class="headerlink" title="container 传输"></a>container 传输</h3><blockquote>
 <p>文件上传</p>
 </blockquote>
@@ -394,7 +417,73 @@
 </blockquote>
 </li>
 </ul>
-<h2 id="dockerfile-编写"><a href="#dockerfile-编写" class="headerlink" title="dockerfile 编写"></a>dockerfile 编写</h2><h2 id="container-likn-互联"><a href="#container-likn-互联" class="headerlink" title="container-likn 互联"></a>container-likn 互联</h2><h2 id="docker-harbor-仓库搭建"><a href="#docker-harbor-仓库搭建" class="headerlink" title="docker-harbor 仓库搭建"></a>docker-harbor 仓库搭建</h2>
+<h2 id="dockerfile-编写"><a href="#dockerfile-编写" class="headerlink" title="dockerfile 编写"></a>dockerfile 编写</h2><table>
+<thead>
+<tr>
+<th align="left">配置项</th>
+<th align="left">意义</th>
+<th align="left">使用</th>
+<th align="left">建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">FROM</td>
+<td align="left">指定基本镜像类似于docker pull下载镜像</td>
+<td align="left">FROM ubuntu:20.04</td>
+<td align="left">尽量少写ubuntu或ubuntu:latest,尽量指定具体的版本.</td>
+</tr>
+<tr>
+<td align="left">LABEL</td>
+<td align="left">用于指定容器的属性信息,作者,个人联系方式(邮件)</td>
+<td align="left">LABEL maintainer&#x3D;”@qq.com”</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">ENV</td>
+<td align="left">用于创建Dockerfile中使用的变量</td>
+<td align="left">ENV Tengine_Version空格2.3.3</td>
+<td align="left">软件版本可以创建使用变量.</td>
+</tr>
+<tr>
+<td align="left">RUN</td>
+<td align="left">制作镜像过程中需要的执行命令，通常系统配置,服务配置,部署。但不能出现阻塞当前终端的命令。</td>
+<td align="left">RUN 系统命令即可</td>
+<td align="left">不建议使用连续多个RUN,合并连续多个RUN.</td>
+</tr>
+<tr>
+<td align="left">ADD</td>
+<td align="left">可以把指定文件或目录拷贝到容器中(指定目录),相对于当前目录.会解压压缩包</td>
+<td align="left">ADD restart.tar.gz空格&#x2F;app&#x2F;code&#x2F;restart&#x2F;</td>
+<td align="left">拷贝压缩包使用.</td>
+</tr>
+<tr>
+<td align="left">COPY</td>
+<td align="left">可以把指定文件或目录拷贝到容器中(指定目录),不支持自动解压.相对于当前目录.</td>
+<td align="left">COPY nginx.conf空格&#x2F;etc&#x2F;nginx&#x2F;nginx.conf</td>
+<td align="left">拷贝文件或目录.</td>
+</tr>
+<tr>
+<td align="left">EXPOSE</td>
+<td align="left">指定镜像要对外暴露的端口</td>
+<td align="left">EXPOSE 80</td>
+<td align="left">用于指定一个或多个容器的端口.未来这个端口可以被-P识别.xxxx:80</td>
+</tr>
+<tr>
+<td align="left">CMD</td>
+<td align="left">用于指定容器的入口命令.入口命令可以在docker run的时候替换.运行镜像启动容器的时候,容器默认运行的命令是什么.</td>
+<td align="left">CMD [“命令”,”参数01”,”参数02”]CMD [“nginx”,”-g”,”daemonoff;”]</td>
+<td align="left">大部分都会使用CMD.</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder">Dockerfile指令</a></p>
+<h3 id="基础nginx-dockerfile"><a href="#基础nginx-dockerfile" class="headerlink" title="基础nginx-dockerfile"></a>基础nginx-dockerfile</h3><blockquote>
+<p>bulid 构建images</p>
+<p>-t 名称标签</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 ~]# mkdir /app/docker/dockerfile/01-centos-nginx -p<br>[root@docker.10.0.0.81 ~]# cd /app/docker/dockerfile/01-centos-nginx<br>[root@docker.10.0.0.81 /app/docker/dockerfile/01-centos-nginx]# vim Dockerfile<br>[root@docker.10.0.0.81 /app/docker/dockerfile/01-centos-nginx]# cat Dockerfile<br>FROM centos:7<br>LABEL author=&quot;redkings&quot;<br><br>RUN curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo<br>RUN curl -o /etc/yum.repos.d/epel.repo https://mirrors.aliyun.com/repo/epel-7.repo<br>RUN yum install nginx -y<br>RUN rm -f /usr/share/nginx/html/index.html<br>RUN echo &quot;this is dockerfile-nginx test&quot; &gt; /usr/share/nginx/html/index.html<br><br>CMD [&quot;nginx&quot;,&quot;-g&quot;,&quot;daemon off;&quot;]<br>[root@docker.10.0.0.81 /app/docker/dockerfile/01-centos-nginx]# docker build -t nginx-test:01 .<br>[+] Building 223.4s (10/10) FINISHED                                                                                              docker:default<br> =&gt; [internal] load build definition from Dockerfile                                                                                        0.0s<br> =&gt; =&gt; transferring dockerfile: 431B                                                                                                        0.0s <br> =&gt; [internal] load metadata for docker.io/library/centos:7                                                                                88.0s <br> =&gt; [internal] load .dockerignore                                                                                                           0.0s<br> =&gt; =&gt; transferring context: 2B                                                                                                             0.0s <br> =&gt; [1/6] FROM docker.io/library/centos:7@sha256:be65f488b7764ad3638f236b7b515b3678369a5124c47b8d32916d6487418ea4                          68.3s <br> =&gt; =&gt; resolve docker.io/library/centos:7@sha256:be65f488b7764ad3638f236b7b515b3678369a5124c47b8d32916d6487418ea4                           0.0s <br> =&gt; =&gt; sha256:be65f488b7764ad3638f236b7b515b3678369a5124c47b8d32916d6487418ea4 1.20kB / 1.20kB                                              0.0s <br> =&gt; =&gt; sha256:dead07b4d8ed7e29e98de0f4504d87e8880d4347859d839686a31da35a3b532f 529B / 529B                                                  0.0s <br> =&gt; =&gt; sha256:eeb6ee3f44bd0b5103bb561b4c16bcb82328cfe5809ab675bb17ab3a16c517c9 2.75kB / 2.75kB                                              0.0s <br> =&gt; =&gt; sha256:2d473b07cdd5f0912cd6f1a703352c82b512407db6b05b43f2553732b55df3bc 76.10MB / 76.10MB                                           65.7s <br> =&gt; =&gt; extracting sha256:2d473b07cdd5f0912cd6f1a703352c82b512407db6b05b43f2553732b55df3bc                                                   2.5s<br> =&gt; [2/6] RUN curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-7.repo                                       0.9s<br> =&gt; [3/6] RUN curl -o /etc/yum.repos.d/epel.repo https://mirrors.aliyun.com/repo/epel-7.repo                                                0.3s<br> =&gt; [4/6] RUN yum install nginx -y                                                                                                         65.1s<br> =&gt; [5/6] RUN rm -f /usr/share/nginx/html/index.html                                                                                        0.1s<br> =&gt; [6/6] RUN echo &quot;this is dockerfile-nginx test&quot; &gt; /usr/share/nginx/html/index.html                                                       0.1s<br> =&gt; exporting to image                                                                                                                      0.4s<br> =&gt; =&gt; exporting layers                                                                                                                     0.4s<br> =&gt; =&gt; writing image sha256:464d217d87d7be083e88a27c1a109cbaab7b05b991509b281d5b6cef49d18582                                                0.0s<br> =&gt; =&gt; naming to docker.io/library/nginx-test:01                                                                                            0.0s<br>[root@docker.10.0.0.81 /app/docker/dockerfile/01-centos-nginx]# docker images | grep nginx-test<br>nginx-test      01              464d217d87d7   39 seconds ago   536MB<br>[root@docker.10.0.0.81 /app/docker/dockerfile/01-centos-nginx]# docker run -d -p 81:80 nginx-test:01<br>771438a5050acf1dbd5fe4d5a130ee4ff6bbf62973945923fccfb553e751672c<br>[root@docker.10.0.0.81 /app/docker/dockerfile/01-centos-nginx]# curl 10.0.0.81:81<br>this is dockerfile-nginx test<br></code></pre></td></tr></table></figure>
+
+<h3 id="ubuntu-tengine-编译安装"><a href="#ubuntu-tengine-编译安装" class="headerlink" title="ubuntu-tengine 编译安装"></a>ubuntu-tengine 编译安装</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">[root@docker.10.0.0.81 /app/docker/dockerfile]# cd 02-ubuntu-tengine/<br>[root@docker.10.0.0.81 /app/docker/dockerfile/02-ubuntu-tengine]# cat Dockerfile <br>FROM ubuntu:20.04<br>LABEL author=&quot;redkings&quot;<br><br>ADD tengine-2.3.3.tar.gz /tmp/<br><br>RUN sed -ri &#x27;s#archive.ubuntu.com|security.ubuntu.com#mirrors.aliyun.com#g&#x27;   /etc/apt/sources.list \<br>    &amp;&amp; apt update \<br>    &amp;&amp; apt install -y libssl-dev make gcc pcre2-utils libpcre3-dev  zlib1g-dev \<br>    &amp;&amp; cd /tmp/tengine-2.3.3/ \<br>    &amp;&amp; ./configure --prefix=/app/tools/tengine-2.3.3/  \<br>      --user=nginx \<br>      --group=nginx \<br>      --with-http_ssl_module \<br>      --with-http_v2_module   \<br>      --with-http_realip_module \<br>      --with-http_stub_status_module \<br>      --with-http_mp4_module \<br>      --with-stream  \<br>      --with-stream_ssl_module   \<br>      --with-stream_realip_module   \<br>      --add-module=modules/ngx_http_upstream_check_module/ \<br>      --add-module=modules/ngx_http_upstream_session_sticky_module \<br>    &amp;&amp; make \<br>    &amp;&amp; make install \<br>    &amp;&amp; groupadd nginx \<br>    &amp;&amp; useradd -s /sbin/nologin -g nginx nginx \<br>    &amp;&amp; ln -s /app/tools/tengine-2.3.3/ /app/tools/tengine \<br>    &amp;&amp; ln -s /app/tools/tengine/sbin/nginx /sbin \<br>    &amp;&amp; echo &quot;this is ubuntu-tengine dockerfile-test&quot; &gt; /app/tools/tengine/html/index.html<br><br>RUN rm -rf /tmp/* /var/cache/*<br><br>EXPOSE 80<br><br>CMD [&quot;nginx&quot;,&quot;-g&quot;,&quot;daemon off;&quot;]<br>[root@docker.10.0.0.81 /app/docker/dockerfile/02-ubuntu-tengine]# docker build -t ubuntu-tengine:01 .<br>[root@docker.10.0.0.81 /app/docker/dockerfile/02-ubuntu-tengine]# docker run -d -p 88:80 ubuntu-tengine:01 <br>206dbdb0045a43a2c517ab277245fa86279fbfc0fe6c8cc8dcaf1f8e71b53003<br>[root@docker.10.0.0.81 /app/docker/dockerfile/02-ubuntu-tengine]# curl 10.0.0.81:88<br>this is ubuntu-tengine dockerfile-test<br></code></pre></td></tr></table></figure>
+<h2 id="container-likn-互联"><a href="#container-likn-互联" class="headerlink" title="container-likn 互联"></a>container-likn 互联</h2><h2 id="docker-harbor-仓库搭建"><a href="#docker-harbor-仓库搭建" class="headerlink" title="docker-harbor 仓库搭建"></a>docker-harbor 仓库搭建</h2>
         
       </div>
 
@@ -406,10 +495,15 @@
   
     
 <nav id="article-nav">
-  <a class="article-nav-btn left  disabled "
+  <a class="article-nav-btn left "
+    
+      href="/2024/12/06/service-%E5%8D%87%E7%BA%A7/"
+      title="service-升级"
      >
     <i class="fa-solid fa-angle-left"></i>
     <p class="title-text">
+      
+        service-升级
         
     </p>
   </a>
@@ -448,6 +542,24 @@
 
 
 
+  <script src="https://cdn.staticfile.org/twikoo/1.6.26/twikoo.all.min.js"></script>
+  <div id="comment-card" class="comment-card">
+    <div class="main-title-bar">
+      <div class="main-title-dot"></div>
+      <div class="main-title">Comments </div>
+    </div>
+    <div id="tcomment"></div>
+  </div>
+  <script>
+      twikoo.init({
+          envId: '',
+          el: '#tcomment',
+          region: '',
+          path: 'location.pathname',
+          lang: '',
+      })
+  </script>
+  
 
     </div>
     <div id="footer-wrapper">
